@@ -1,5 +1,8 @@
+const Location = new WeakMap();
+const UserService = new WeakMap();
+
 export class LoginController {
-  constructor ($timeout, webDevTec, toastr, $log, $window) {
+  constructor (toastr, $log, $window, $location, userService) {
     'ngInject';
 
     this.awesomeThings = [];
@@ -8,42 +11,17 @@ export class LoginController {
     this.toastr = toastr;
     this.$log = $log;
     this.$window = $window;
-    this.activate($timeout, webDevTec);
-
+    Location.set(this, $location);
+    UserService.set(this, userService);
+    if (userService.isLogged()) {
+      $location.path('/main');
+    }
   }
 
-  activate($timeout, webDevTec) {
-    this.getWebDevTec(webDevTec);
-    $timeout(() => {
-      this.classAnimation = 'rubberBand';
-    }, 4000);
-  }
-
-  getWebDevTec(webDevTec) {
-    this.awesomeThings = webDevTec.getTec();
-
-    angular.forEach(this.awesomeThings, (awesomeThing) => {
-      awesomeThing.rank = Math.random();
-    });
-  }
-
-  onFBLoginClick() {
-    let FB = this.$window.FB || {};
-    FB.getLoginStatus((function(response) {
-      this.$log.debug(response);
-    }).bind(this));
-  }
-
-  fbLogin() {
-    let FB = this.$window.FB || {};
-    FB.getLoginStatus((function(response) {
-      this.$log.debug(response);
-      this.isFBLogged = response.status === 'unknow';
-    }).bind(this));
-  }
-
-  showToastr() {
-    this.toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-    this.classAnimation = '';
+  onLoginClick() {
+    this.$log.debug('Logged. Login is', this.userEmail);
+    localStorage.setItem('userEmail', this.userEmail);
+    UserService.get(this).update();
+    Location.get(this).path('/main');
   }
 }

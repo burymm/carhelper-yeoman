@@ -5,8 +5,7 @@ You need clone repository
 
 Than you need install node, python and install global packages
 
-`npm install -g yo gulp bower`
-`npm install -g generator-gulp-angular`
+`npm install -g yo gulp bower generator-gulp-angular`
 
 After all this operation you need to install application
 
@@ -20,3 +19,6 @@ It's time to use Gulp tasks:
 - `$ gulp test:auto` to run your unit tests with Karma in watch mode
 - `$ gulp protractor` to launch your e2e tests with Protractor
 - `$ gulp protractor:dist` to launch your e2e tests with Protractor on the dist files
+
+
+
