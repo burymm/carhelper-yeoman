@@ -1,0 +1,9 @@
+<div class="message-popup-wrapper {{vm.data().type}}" ng-class="{show: vm.data().show}">
+  <div class="message-popup panel panel-default box-shadow--2dp">
+    <h2>{{vm.data().title}}</h2>
+    <p>{{vm.data().text}}</p>
+    <div class="buttons">
+      <button class="btn btn-primary" ng-click="vm.popupClose()">Ok (close)</button>
+    </div>
+  </div>
+</div>

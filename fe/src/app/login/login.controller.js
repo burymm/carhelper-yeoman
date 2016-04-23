@@ -1,16 +1,13 @@
 const Location = new WeakMap();
 const UserService = new WeakMap();
+const allowEmails = ['burymm@gmail.com, belylis@gmail.com'];
 
 export class LoginController {
-  constructor (toastr, $log, $window, $location, userService) {
+  constructor ($log, $location, userService, messagePopupService) {
     'ngInject';
 
-    this.awesomeThings = [];
-    this.classAnimation = '';
-    this.creationDate = 1461009428090;
-    this.toastr = toastr;
     this.$log = $log;
-    this.$window = $window;
+    this.messagePopupService = messagePopupService;
     Location.set(this, $location);
     UserService.set(this, userService);
     if (userService.isLogged()) {
@@ -20,8 +17,18 @@ export class LoginController {
 
   onLoginClick() {
     this.$log.debug('Logged. Login is', this.userEmail);
-    localStorage.setItem('userEmail', this.userEmail);
-    UserService.get(this).update();
-    Location.get(this).path('/main');
+    if (allowEmails.join(',').indexOf(this.userEmail) > -1) {
+      localStorage.setItem('userEmail', this.userEmail);
+      UserService.get(this).update();
+      Location.get(this).path('/main');
+    } else {
+      this.$log.debug('Loging error');
+      this.messagePopupService.setData({
+        title: 'Login error',
+        text: 'Login or password wrong',
+        type: 'error'
+      });
+
+    }
   }
 }

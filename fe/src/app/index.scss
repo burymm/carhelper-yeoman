@@ -12,6 +12,10 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 // bower:scss
 // endbower
 
+.page-wrapper {
+  position: relative;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
